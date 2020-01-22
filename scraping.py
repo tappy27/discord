@@ -32,4 +32,3 @@ def get_habitat_from_zukan(url):
         habitat_list.append(tags[i].string)
 
     return habitat_list
-print(get_habitat_from_zukan('https://dragon-quest.jp/ten/monster/zukan/plant/12.php'))

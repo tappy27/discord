@@ -2,7 +2,7 @@ import sys
 import discord
 import scraping
 
-TOKEN = 'your_token'
+TOKEN = 'your-token'
 
 client = discord.Client()
 
@@ -32,7 +32,7 @@ async def on_message(message):
         monster_name = message.content.lstrip('/dq-monster')
         monster_name = monster_name.replace(' ','')
         monster_name = monster_name.replace('　','')
-        await url = scraping.get_zukan_url(monster_name)
+        url = scraping.get_zukan_url(monster_name)
         await message.channel.send(scraping.get_habitat_from_zukan(url))
         await message.channel.send(url)
 
