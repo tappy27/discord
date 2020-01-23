@@ -2,7 +2,7 @@ import sys
 import discord
 import scraping
 
-TOKEN = 'NjY5MTEwNjExMDQ0NTk3Nzcx.XiiR4A.HKG3IEATtxpk-OhawaQxCBeNb2o'
+TOKEN = 'your-token'
 
 client = discord.Client()
 
