@@ -28,7 +28,24 @@ def get_habitat_from_zukan(url):
     #extract data from tags
     habitat_list = []
     for i in range(len(tags)):
-        print(tags[i].string)
+        if tags[i].string == 'アストルティア5大陸':break
+        habitat_list.append(tags[i].string)
+
+    return habitat_list
+
+
+def get_forecast():
+    r = requests.get('https://dq10ragu.com/')
+    soup = bs(r.content, 'html.parser')
+
+    #get tags
+    tags = soup.find_all('a', href=re.compile('https://dragon-quest.jp/ten/map/'))
+    if tags is None:
+        return '生息地記載無し'
+
+    #extract data from tags
+    habitat_list = []
+    for i in range(len(tags)):
         if tags[i].string == 'アストルティア5大陸':break
         habitat_list.append(tags[i].string)
 
