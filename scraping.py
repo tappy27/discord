@@ -9,7 +9,7 @@ def get_zukan_url(monster_name):
     #get tag
     tag = soup.find('a', text=re.compile(monster_name))
     if tag is None:
-        return 'そんなモンスターはいねぇ'
+        return None
 
     #generate url
     url = 'https://dragon-quest.jp/ten/monster/zukan/' + tag.get('href')
@@ -28,6 +28,7 @@ def get_habitat_from_zukan(url):
     #extract data from tags
     habitat_list = []
     for i in range(len(tags)):
+        print(tags[i].string)
         if tags[i].string == 'アストルティア5大陸':break
         habitat_list.append(tags[i].string)
 
