@@ -42,10 +42,16 @@ async def on_message(message):
 
     if message.content.lower() == '/yohou':
         dic = calculate.get_forecast()
-        
-        await message.channel.send('冥骸魔レギルラッゾ　　紅殻魔スコルパイド　　翠将鬼ジェルザーク\n' +
-            '　'*4 + dic['inuhone'] + '　'*11 + dic['sasori'] + '　'*10 + dic['hage'] + '\n\n' +
-            ' '*11 + '現在' + ' '*36 + '次回(' + dic['time_to_next'] + '分後)' + ' '*20 + '次々回(1時間' + dic['time_to_next'] + '分後)\n' +
-            dic['current_group'] + '　'*5 + dic['next_group'] + '　'*5 + dic['next_next_group'])
+        await message.channel.send('---聖守護者-------------------\n' +
+                                   '冥骸魔レギルラッゾ　' + dic['inuhone'] + '\n' +
+                                   '紅殻魔スコルパイド　' + dic['sasori']  + '\n' +
+                                   '翠将鬼ジェルザーク　' + dic['hage']  + '\n' +
+                                   '\n' +
+                                   '---防衛軍---------------------\n' +
+                                   '　　残り' + dic['time_to_next'] + '分\n' +
+                                   dic['current_group'] + '　<-　Now!\n' +
+                                   dic['next_group'] + '\n' +
+                                   dic['next_next_group'])
+
 # run
 client.run(TOKEN)
