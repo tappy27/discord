@@ -3,6 +3,72 @@ from bs4 import BeautifulSoup
 import re
 
 def get_zukan_url(monster_name):
+    r = requests.get('https://dragon-quest.jp/ten/monster/zukan/')
+    soup = BeautifulSoup(r.content, 'html.parser')
+
+    #get tag
+    tag = soup.find('a', text=re.compile(monster_name))
+    if tag is None:
+        return None
+
+    #generate url
+    url = 'https://dragon-quest.jp/ten/monster/zukan/' + tag.get('href')    
+
+    return url
+
+def get_habitat_from_zukan(url):
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, 'html.parser')
+
+    #get tags
+    tags = soup.find_all('a', href=re.compile('https://dragon-quest.jp/ten/map/'))
+    if tags is None:
+        return '生息地記載無し'
+
+    #extract data from tags
+    habitat_list = []
+    for i in range(len(tags)):
+        if tags[i].string == 'アストルティア5大陸':break
+        habitat_list.append(tags[i].string)
+
+    return habitat_list
+
+def get_map_image(map_name):
+    url_table = ['https://dragon-quest.jp/ten/map/fild/',
+                'https://dragon-quest.jp/ten/map/fild_r/',
+                'https://dragon-quest.jp/ten/map/fild_t/',
+                'https://dragon-quest.jp/ten/map/fild_n/',
+                'https://dragon-quest.jp/ten/map/ver4/',
+                'https://dragon-quest.jp/ten/map/ver5/',
+                'https://dragon-quest.jp/ten/map/house/',
+                'https://dragon-quest.jp/ten/map/off/']
+
+    #get map url
+    tag = None
+    for url in url_table:
+        r = requests.get(url)
+        soup = BeautifulSoup(r.content, 'html.parser')
+        tag = soup.find('a', text=re.compile(map_name))
+        if tag is not None:
+            break
+
+    if tag is None:
+        return None
+    
+    #get image
+
+    #r = requests.get('https://dragon-quest.jp/ten/map/fild_t/r_koni.php')
+    #soup = BeautifulSoup(r.content, 'html.parser')
+    #tag = soup.findAll('img')
+
+    
+
+get_map_image('真リンジャハル海岸')
+
+"""
+#以下、極限をスクレイピングするコード書こうと思ったけど、ダルくなって途中でやめたやつ
+#あ行か行...ごとのページに不完全なものがあったから無理だった
+def get_zukan_url(monster_name):
 
     #get source
     if re.match('[\u3041-\u304A]|[\u30A1-\u30AA]|\u3094|\u30F4', monster_name[0]): #あ行
@@ -51,40 +117,4 @@ def get_monster_info_from_url(url):
         tag = tag.nextSibling
         print(tag.get('name')) 
     print(tag.get('name'))
-
-
-
 """
-def get_zukan_url_tora(monster_name):
-    r = requests.get('https://dragon-quest.jp/ten/monster/zukan/')
-    soup = BeautifulSoup(r.content, 'html.parser')
-
-    #get tag
-    tag = soup.find('a', text=re.compile(monster_name))
-    if tag is None:
-        return None
-
-    #generate url
-    url = 'https://dragon-quest.jp/ten/monster/zukan/' + tag.get('href')    
-
-    return url
-
-def get_habitat_from_zukan_tora(url):
-    r = requests.get(url)
-    soup = BeautifulSoup(r.content, 'html.parser')
-
-    #get tags
-    tags = soup.find_all('a', href=re.compile('https://dragon-quest.jp/ten/map/'))
-    if tags is None:
-        return '生息地記載無し'
-
-    #extract data from tags
-    habitat_list = []
-    for i in range(len(tags)):
-        if tags[i].string == 'アストルティア5大陸':break
-        habitat_list.append(tags[i].string)
-
-    return habitat_list
-"""
-
-get_monster_info_from_url(get_zukan_url('アークデーモン'))
