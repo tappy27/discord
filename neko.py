@@ -1,7 +1,8 @@
 import sys
 import discord
-import scraping
-import calculate
+import monster
+import maps
+import forecast
 
 TOKEN = 'your-token'
 
@@ -33,11 +34,11 @@ async def on_message(message):
         monster_name = message.content.lower().lstrip('/monster')
         monster_name = monster_name.replace(' ','')
         monster_name = monster_name.replace('　','')
-        url = scraping.get_zukan_url(monster_name)
+        url = monster.get_zukan_url(monster_name)
         if url is None:
             await message.channel.send('そんなモンスターはいねぇ')
         else:
-            habitat_list = scraping.get_habitat_from_zukan(url)
+            habitat_list = monster.get_habitat(url)
             habitat_str = ''
             for i in range(len(habitat_list)):
                 habitat_str += habitat_list[i] + '\n'
@@ -48,11 +49,11 @@ async def on_message(message):
         map_name = message.content.lower().lstrip('/map')
         map_name = map_name.replace(' ','')
         map_name = map_name.replace('　','')
-        url = scraping.get_map_url(map_name)
+        url = maps.get_map_url(map_name)
         if url is None:
             await message.channel.send('そんな場所はねぇ')
         else:
-            image_list = scraping.get_map_image(url)
+            image_list = maps.get_map_image(url)
             image_str = ''
             for i in range(len(image_list)):
                 image_str += image_list[i] + '\n'
@@ -64,14 +65,14 @@ async def on_message(message):
                 await message.channel.send(url)
 
     if message.content.lower() == '/yohou':
-        dic = calculate.get_forecast()
+        dic = forecast.get_forecast()
         await message.channel.send('---聖守護者-------------------\n' +
                                    '冥骸魔レギルラッゾ　' + dic['inuhone'] + '\n' +
                                    '紅殻魔スコルパイド　' + dic['sasori']  + '\n' +
                                    '翠将鬼ジェルザーク　' + dic['hage']  + '\n' +
                                    '\n' +
                                    '---防衛軍---------------------\n' +
-                                   '　　残り' + dic['time_to_next'] + '分\n' +
+                                   '　残り' + dic['time_to_next'] + '分\n' +
                                    dic['current_group'] + '　<-　Now!\n' +
                                    dic['next_group'] + '\n' +
                                    dic['next_next_group'])
