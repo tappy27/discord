@@ -35,7 +35,7 @@ win10であれば，https://www.python.org/downloads/windows/ のlatestをイン
 
 3. bot作成  
 discordにbotアカウントを作ってください  
-[この記事](https://note.com/bami55/n/ncc3a68652697)が分かりやすいです
+[この記事](https://note.com/bami55/n/ncc3a68652697)が分かりやすいです  
 botが作れたら，何かしらのエディタでneko.pyを開いてください  
 プログラムの最初のほうにある`TOKEN = 'your-token'`の your-token を削除してbotのtokenを貼り付けてください．  
 `ptyhon neko.py`とやって"ログイン完了"の文字が出たら正しく動作しています．  
