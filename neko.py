@@ -3,7 +3,7 @@ import discord
 import scraping
 import calculate
 
-TOKEN = 'your-token'
+TOKEN = 'NjY5MTEwNjExMDQ0NTk3Nzcx.Xiwyww.9spDULBb_wqOgsUyWtSfqhXexmk'
 
 client = discord.Client()
 
@@ -37,7 +37,11 @@ async def on_message(message):
         if url is None:
             await message.channel.send('そんなモンスターはいねぇ')
         else:
-            await message.channel.send(scraping.get_habitat_from_zukan(url))
+            habitat_list = scraping.get_habitat_from_zukan(url)
+            habitat_str = ''
+            for i in range(len(habitat_list)):
+                habitat_str += habitat_list[i] + '\n'
+            await message.channel.send(habitat_str)
             await message.channel.send(url)
 
     if message.content.lower() == '/yohou':
