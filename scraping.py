@@ -53,10 +53,14 @@ def get_map_url(map_name):
         if tag is not None:
             break
 
-    if tag is None:
+    url = tag.get('href')
+    try:
+        requests.get(url)
+    except:
+        print('error: 不適切なurlにアクセス')
         return None
     
-    return tag.get('href')
+    return url
 
 def get_map_image(url):
     r = requests.get(url)
@@ -75,8 +79,8 @@ def get_map_image(url):
     return image_urls
 
 """
-#以下、極限をスクレイピングするコード書こうと思ったけど、ダルくなって途中でやめたやつ
-#あ行か行...ごとのページに不完全なものがあったから無理だった
+#以下、極限をスクレイピングするコード書こうとして途中でやめたやつ
+#あ行か行...ごとのページに不完全なものがあったから無理になってダルくなった
 def get_zukan_url(monster_name):
 
     #get source

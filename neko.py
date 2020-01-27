@@ -3,7 +3,7 @@ import discord
 import scraping
 import calculate
 
-TOKEN = 'NjY5MTEwNjExMDQ0NTk3Nzcx.Xiwyww.9spDULBb_wqOgsUyWtSfqhXexmk'
+TOKEN = 'your-token'
 
 client = discord.Client()
 
@@ -43,6 +43,25 @@ async def on_message(message):
                 habitat_str += habitat_list[i] + '\n'
             await message.channel.send(habitat_str)
             await message.channel.send(url)
+
+    if message.content.lower().startswith('/map'):
+        map_name = message.content.lower().lstrip('/map')
+        map_name = map_name.replace(' ','')
+        map_name = map_name.replace('　','')
+        url = scraping.get_map_url(map_name)
+        if url is None:
+            await message.channel.send('そんな場所はねぇ')
+        else:
+            image_list = scraping.get_map_image(url)
+            image_str = ''
+            for i in range(len(image_list)):
+                image_str += image_list[i] + '\n'
+            if image_str == '':
+                print(url + 'にimage無し')
+                await message.channel.send('そんな場所はねぇ')
+            else:
+                await message.channel.send(image_str)
+                await message.channel.send(url)
 
     if message.content.lower() == '/yohou':
         dic = calculate.get_forecast()
