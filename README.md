@@ -1,5 +1,5 @@
 # nekobot
-discod × ドラクエ10 をする人のためのdiscord bot  
+discord × ドラクエ10 をする人のためのdiscord bot  
 まだ開発中，暇なときに少しずつ新機能を追加します
 
 ## usage
