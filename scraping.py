@@ -28,12 +28,13 @@ def get_habitat_from_zukan(url):
     #extract data from tags
     habitat_list = []
     for i in range(len(tags)):
-        if tags[i].string == 'アストルティア5大陸':break
+        if tags[i].string == 'アストルティア5大陸':
+            break
         habitat_list.append(tags[i].string)
 
     return habitat_list
 
-def get_map_image(map_name):
+def get_map_url(map_name):
     url_table = ['https://dragon-quest.jp/ten/map/fild/',
                 'https://dragon-quest.jp/ten/map/fild_r/',
                 'https://dragon-quest.jp/ten/map/fild_t/',
@@ -55,15 +56,23 @@ def get_map_image(map_name):
     if tag is None:
         return None
     
-    #get image
+    return tag.get('href')
 
-    #r = requests.get('https://dragon-quest.jp/ten/map/fild_t/r_koni.php')
-    #soup = BeautifulSoup(r.content, 'html.parser')
-    #tag = soup.findAll('img')
+def get_map_image(url):
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, 'html.parser')
 
-    
+    #get tags
+    tags = soup.find_all('img', src=re.compile('../../images/'))
+    if tags is None:
+        return 'マップ画像なし'
 
-get_map_image('真リンジャハル海岸')
+    #get image from tags
+    image_urls = []
+    for tag in tags:
+        image_urls.append(url + '/../' + tag.get('src'))
+
+    return image_urls
 
 """
 #以下、極限をスクレイピングするコード書こうと思ったけど、ダルくなって途中でやめたやつ
