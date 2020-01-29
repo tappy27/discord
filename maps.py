@@ -10,7 +10,8 @@ def get_map_url(map_name):
                 'https://dragon-quest.jp/ten/map/ver4/',
                 'https://dragon-quest.jp/ten/map/ver5/',
                 'https://dragon-quest.jp/ten/map/house/',
-                'https://dragon-quest.jp/ten/map/off/']
+                'https://dragon-quest.jp/ten/map/off/',
+                'https://dragon-quest.jp/ten/update/ver5_1/']
 
     #get map url
     tag = None
