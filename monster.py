@@ -24,16 +24,14 @@ def get_habitat(url):
     tags = soup.find_all('a', href=re.compile('https://dragon-quest.jp/ten/map/'))
     if tags is None:
         return '生息地記載無し'
-
     #extract data from tags
     habitat_list = []
     for i in range(len(tags)):
         if tags[i].string == 'アストルティア5大陸':
             break
-        habitat_list.append(tags[i].string)
-
+        habitat_list.append(tags[i].text.rstrip('\n'))
+        
     return habitat_list
-
 
 
 """

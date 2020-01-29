@@ -29,6 +29,13 @@ async def on_message(message):
     if message.content.lower() == '/neko':
         await message.channel.send('にゃーん')
 
+    if message.content.lower() == '/tappy':
+        await message.channel.send('zzzzzzz')
+    
+    if message.content.lower() == '/miso':
+        dic = forecast.get_forecast()
+        await message.channel.send('さそりいきませんか？？' + '\n'
+                                   '今日は ' + dic['sasori'] + ' です')
 
     if message.content.lower().startswith('/monster'):
         monster_name = message.content.lower().lstrip('/monster')
