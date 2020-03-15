@@ -4,7 +4,8 @@ import monster
 import maps
 import forecast
 
-TOKEN = 'your-token'
+TOKEN = 'NjcxMzkzOTg5ODMxNjg4MjEy.Xi8bpQ.3OaLogTSvBSsjKwT6pf4UsJJN2s'
+#TOKEN = 'NjY5MTEwNjExMDQ0NTk3Nzcx.Xi8aog.dDnRyNPdr8_2GsxWsjlINOQ0AjU'
 
 client = discord.Client()
 
@@ -29,6 +30,7 @@ async def on_message(message):
     if message.content.lower() == '/neko':
         await message.channel.send('にゃーん')
 
+
     if message.content.lower() == '/tappy':
         await message.channel.send('zzzzzzz')
     
@@ -36,6 +38,9 @@ async def on_message(message):
         dic = forecast.get_forecast()
         await message.channel.send('さそりいきませんか？？' + '\n'
                                    '今日は ' + dic['sasori'] + ' です')
+
+    if message.content.lower() == '/kira':
+        await message.channel.send('https://dragon-quest.jp/ten/images/marason/ver5_1.gif')
 
     if message.content.lower().startswith('/monster'):
         monster_name = message.content.lower().lstrip('/monster')
@@ -49,8 +54,11 @@ async def on_message(message):
             habitat_str = ''
             for i in range(len(habitat_list)):
                 habitat_str += habitat_list[i] + '\n'
-            await message.channel.send(habitat_str)
-            await message.channel.send(url)
+            try:
+                await message.channel.send(habitat_str)
+                await message.channel.send(url)
+            except:
+                await message.channel.send('そんなモンスターはいねぇ')
 
     if message.content.lower().startswith('/map'):
         map_name = message.content.lower().lstrip('/map')
@@ -64,9 +72,6 @@ async def on_message(message):
             image_str = ''
             for i in range(len(image_list)):
                 image_str += image_list[i] + '\n'
-            if image_str == '':
-                print(url + 'にimage無し')
-                await message.channel.send('そんな場所はねぇ')
             else:
                 await message.channel.send(image_str)
                 await message.channel.send(url)
@@ -77,6 +82,7 @@ async def on_message(message):
                                    '冥骸魔レギルラッゾ　' + dic['inuhone'] + '\n' +
                                    '紅殻魔スコルパイド　' + dic['sasori']  + '\n' +
                                    '翠将鬼ジェルザーク　' + dic['hage']  + '\n' +
+                                   '剛獣鬼ガルドドン　　' + dic['gorilla']  + '\n' +
                                    '\n' +
                                    '---防衛軍---------------------\n' +
                                    '　残り' + dic['time_to_next'] + '分\n' +

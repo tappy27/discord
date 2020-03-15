@@ -31,7 +31,7 @@ def get_forecast():
     dic['inuhone'] =  str((rotate_mode + 1) % 3 + 1)
     dic['sasori'] = str(rotate_mode % 3 + 1)
     dic['hage'] = str((rotate_mode + 2) % 3 + 1)
+    dic['gorilla'] = dic['hage']
 
     return dic
 
-get_forecast()
