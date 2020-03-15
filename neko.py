@@ -4,8 +4,8 @@ import monster
 import maps
 import forecast
 
-TOKEN = 'NjcxMzkzOTg5ODMxNjg4MjEy.Xi8bpQ.3OaLogTSvBSsjKwT6pf4UsJJN2s'
-#TOKEN = 'NjY5MTEwNjExMDQ0NTk3Nzcx.Xi8aog.dDnRyNPdr8_2GsxWsjlINOQ0AjU'
+TOKEN = 'your-token'
+
 
 client = discord.Client()
 
