@@ -8,16 +8,9 @@ import maps
 import forecast
 import market_price
 
-#TOKEN = 'your-token'
-
-#bot research room
-#TOKEN = 'NjY5MTEwNjExMDQ0NTk3Nzcx.XtNiGg.O36UP4Eu3ie11N86kgu8mQ6-XE4'
-
-#rururunpow room
-TOKEN = 'NzE2NTYzOTc4NDEwNzg2ODc2.XtNnIw.jG9UyIQcGxRaPNApYo2AnsFS-hA'
+TOKEN = 'your-token'
 
 client = discord.Client()
-
 
 # when log in
 @client.event
@@ -159,6 +152,8 @@ async def on_message(message):
                 data = df.loc[normal[i]]
                 mes += str(i+1) + '位 ' + normal[i] + '　'*(10 - len(normal[i])) + data['price'] +'\n'
             mes += '\nデータ更新日時: ' + data['date'] + '23:00付近'
+
+            
             await message.channel.send(mes)
 
         else:
