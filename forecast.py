@@ -2,9 +2,8 @@ import math
 import datetime
 
 
-def get_forecast():
+def get_forecast(now):
 
-    now = datetime.datetime.today()
     #Defence Forces schedule
     standard_time = datetime.datetime(2020, 3, 29, 0, 00, 00) #rotate_mode = 0
     rotate_mode = (now - standard_time).days % 5
@@ -26,9 +25,7 @@ def get_forecast():
         table = table[6:] + table[:6]
 
     dic = {}
-    dic['current_group'] = table[now.hour % len(table)]
-    dic['next_group'] = table[(now.hour + 1) % len(table)]
-    dic['next_next_group'] = table[(now.hour + 2) % len(table)]
+    dic['table'] = table[now.hour % len(table):] + table[:now.hour % len(table)]
     dic['time_to_next'] = str(60 - now.minute)
 
     i = 0
@@ -47,5 +44,4 @@ def get_forecast():
     dic['gorilla'] = dic['hage']
 
     return dic
-
-get_forecast()
+    

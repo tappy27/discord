@@ -1,5 +1,6 @@
 import sys
 import math
+import datetime
 import pandas as pd
 import discord
 
@@ -46,6 +47,11 @@ async def on_message(message):
                                    '輝晶獣' + '\n'
                                    'コインボス (ドラゴン, 帝国三将軍, ゴレオン, ゲルニック, Sキラーマシン)')
 
+    if message.content.lower() == '/kageya':
+        dic = forecast.get_forecast()
+        await message.channel.send('ジェルいきませんか？？' + '\n'
+                                   '今日は ' + dic['hage'] + ' です')
+
     if message.content.lower() == '/miso':
         dic = forecast.get_forecast()
         await message.channel.send('さそりいきませんか？？' + '\n'
@@ -85,14 +91,12 @@ async def on_message(message):
             await message.channel.send('そんなモンスターはいねぇ')
         else:
             habitat_list = monster.get_habitat(url)
-            habitat_str = ''
-            for i in range(len(habitat_list)):
-                habitat_str += habitat_list[i] + '\n'
-            try:
-                await message.channel.send(habitat_str)
-                await message.channel.send(url)
-            except:
-                await message.channel.send('そんなモンスターはいねぇ')
+            mes = ''
+            for i in habitat_list:
+                mes += i + '\n'
+            mes += 'source\n'
+            mes += url
+            await message.channel.send(mes)
 
     if message.content.lower().startswith('/map'):
         map_name = message.content.lower().replace('/map', '')
@@ -103,30 +107,34 @@ async def on_message(message):
             await message.channel.send('そんな場所はねぇ')
         else:
             image_list = maps.get_map_image(url)
-            image_str = ''
-            for i in range(len(image_list)):
-                image_str += image_list[i] + '\n'
-            else:
-                await message.channel.send(image_str)
-                await message.channel.send(url)
+            mes = '宝箱, キラキラ\n'
+            mes += image_list[0] + '\n'
+            mes += 'モンスター分布, 釣り\n'
+            mes += image_list[1] + '\n'
+            mes += 'source\n'
+            mes += url
+            await message.channel.send(mes)
 
     if message.content.lower() == '/yohou':
-        dic = forecast.get_forecast()
-        await message.channel.send('---聖守護者-------------------\n'+
-                                   '冥骸魔レギルラッゾ　' + dic['inuhone'] +'\n'+
-                                   '紅殻魔スコルパイド　' + dic['sasori']  +'\n'+
-                                   '翠将鬼ジェルザーク　' + dic['hage']  +'\n'+
-                                   '剛獣鬼ガルドドン　　' + dic['gorilla']  +'\n'+
-                                   '\n'+
-                                   '---防衛軍---------------------\n'+
-                                   '　残り' + dic['time_to_next'] + '分\n'+
-                                   dic['current_group'] + '　<-　Now!\n'+
-                                   dic['next_group'] +'\n'+
-                                   dic['next_next_group'] +'\n'+
-                                   '\n'+
-                                   '次回の ドラゴン→全兵団 :\n'+ 
-                                   dic['next_new_start'] + ':00 - ' + dic['next_new_end'] + ':00')
+        now = datetime.datetime.today()
+        dic = forecast.get_forecast(now)
+        mes = '```'
+        mes += '---聖守護者--------------\n'
+        mes += '冥骸魔レギルラッゾ　' + dic['inuhone'] +'\n'
+        mes += '紅殻魔スコルパイド　' + dic['sasori']  +'\n'
+        mes += '翠将鬼ジェルザーク　' + dic['hage']  +'\n'
+        mes += '剛獣鬼ガルドドン　　' + dic['gorilla']  +'\n'
+        mes += '\n'
+        mes += '---防衛軍----------------\n'
 
+        time = str(now.hour)
+        mes += time + ':00' + ' '*(4 - len(time)) + dic['table'][0] + ' <- 残り' + dic['time_to_next'] + '分\n'
+        for i in range(1,len(dic['table'])):
+            time = str((now + datetime.timedelta(hours=i)).hour)
+            mes += time + ':00' + ' '*(4 - len(time)) + dic['table'][i] + '\n'
+        mes += '```'
+
+        await message.channel.send(mes)
 
     if message.content.lower().startswith('/souba'):
         item_name = message.content.lower().replace('/souba', '')
@@ -143,16 +151,17 @@ async def on_message(message):
             df = pd.read_csv('souba.csv', encoding='utf_8_sig', usecols=['item','price','num','date','graph'])
             df = df.set_index('item')
             normal, rare = market_price.get_drop_rank()
-            mes = '---レアドロップ----------------------\n'
+            mes = '```'
+            mes += '---レアドロップ---------------\n'
             for i in range(8):
                 data = df.loc[rare[i]]
                 mes += str(i+1) + '位 ' + rare[i] + '　'*(10 - len(rare[i])) + data['price'] +'\n'
-            mes += '\n---通常ドロップ----------------------\n'
+            mes += '\n---通常ドロップ---------------\n'
             for i in range(8):
                 data = df.loc[normal[i]]
                 mes += str(i+1) + '位 ' + normal[i] + '　'*(10 - len(normal[i])) + data['price'] +'\n'
             mes += '\nデータ更新日時: ' + data['date'] + '23:00付近'
-
+            mes += '```'
             
             await message.channel.send(mes)
 

@@ -10,8 +10,7 @@ def get_map_url(map_name):
                 'https://dragon-quest.jp/ten/map/ver4/',
                 'https://dragon-quest.jp/ten/map/ver5/',
                 'https://dragon-quest.jp/ten/map/house/',
-                'https://dragon-quest.jp/ten/map/off/',
-                'https://dragon-quest.jp/ten/update/ver5_1/']
+                'https://dragon-quest.jp/ten/map/off/']
 
     #get map url
     tag = None
@@ -21,12 +20,11 @@ def get_map_url(map_name):
         tag = soup.find('a', text=re.compile(map_name))
         if tag is not None:
             break
-
-    url = tag.get('href')
+    
     try:
+        url = tag.get('href')
         requests.get(url)
     except:
-        print('error: 不適切なurlにアクセス')
         return None
     
     return url
