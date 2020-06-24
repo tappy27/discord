@@ -45,20 +45,23 @@ async def on_message(message):
                                    '盗む金策' + '\n'
                                    '細胞' + '\n'
                                    '輝晶獣' + '\n'
-                                   'コインボス (ドラゴン, 帝国三将軍, ゴレオン, ゲルニック, Sキラーマシン)')
+                                   'コインボス (ドラゴン, 帝国三将軍, ゲルニック, Sキラーマシン)')
 
     if message.content.lower() == '/kageya':
-        dic = forecast.get_forecast()
+        now = datetime.datetime.today()
+        dic = forecast.get_forecast(now)
         await message.channel.send('ジェルいきませんか？？' + '\n'
                                    '今日は ' + dic['hage'] + ' です')
 
     if message.content.lower() == '/miso':
-        dic = forecast.get_forecast()
+        now = datetime.datetime.today()
+        dic = forecast.get_forecast(now)
         await message.channel.send('さそりいきませんか？？' + '\n'
                                    '今日は ' + dic['sasori'] + ' です')
 
     if message.content.lower() in ['/sijimi', '/shijimi', '/sizimi', '/shizimi']:
-        dic = forecast.get_forecast()
+        now = datetime.datetime.today()
+        dic = forecast.get_forecast(now)
         await message.channel.send('ゴリラいきませんか？？' + '\n'
                                    '今日は ' + dic['gorilla'] + ' です')
     
